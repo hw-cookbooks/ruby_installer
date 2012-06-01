@@ -1,7 +1,7 @@
 
 remote_file File.join('/', 'tmp', File.basename(node[:ruby_installer][:ree_url])) do
   source node[:ruby_installer][:ree_url]
-  not_if{ ::File.exists?(File.basename(node[:ruby_installer][:ree_url])) }
+  not_if{ ::File.exists?(File.join('/', 'tmp', File.basename(node[:ruby_installer][:ree_url]))) }
 end
 bash "Install REE deb" do
   code "dpkg -i #{File.join('/', 'tmp', File.basename(node[:ruby_installer][:ree_url]))}; apt-get -f install"
