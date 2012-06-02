@@ -19,7 +19,7 @@ knife node run_list add my.node recipe[ruby_installer]
 Configurable attributes
 =======================
 
-* `default[:ruby_installer][:method] = 'package' # package/ree/source/pennyworth`
+* `default[:ruby_installer][:method] = 'package' # package/ree/source
 * `default[:ruby_installer][:package_name] = 'ruby-full' # apt package name`
 * `default[:ruby_installer][:rubygem_package] = false # install rubygems package`
 * `default[:ruby_installer][:source_version] = nil # source version`
@@ -29,8 +29,7 @@ Configurable attributes
 Notes
 =====
 
-Source installation is currently not implemented. If pennyworth installation
-method is used, the pennyworth_client cookbook must be provided.
+Source installation is currently not implemented.
 
 Repository
 ==========

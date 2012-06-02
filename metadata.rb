@@ -8,4 +8,3 @@ version          "0.0.1"
 supports 'ubuntu'
 supports 'debian'
 
-suggests 'pennyworth_client'

@@ -5,8 +5,6 @@ ohai "ruby" do
 end
 
 case node[:ruby_installer][:method]
-when 'pennyworth'
-  include_recipe 'ruby_installer::pennyworth'
 when 'package'
   include_recipe 'ruby_installer::package'
 when 'ree'
