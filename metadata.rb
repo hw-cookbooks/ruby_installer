@@ -5,7 +5,8 @@ description      "Installs ruby"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.0.1"
 
-supports 'ubuntu'
-supports 'debian'
+%w(oracle centos redhat scientific enterpriseenterprise fedora amazon ubuntu debian mint).each do |os|
+  supports os
+end
 
 depends 'build-essential'
