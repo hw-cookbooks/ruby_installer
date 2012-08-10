@@ -15,6 +15,7 @@ bash "install_ruby" do
     make install
   EOH
   action :nothing
+  notifies :reload, resources(:ohai => 'ruby'), :immediately
 end
 
 remote_file "/usr/src/ruby-#{node[:ruby_installer][:source_version]}.tar.gz" do
