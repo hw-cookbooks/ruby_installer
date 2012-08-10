@@ -13,11 +13,13 @@ when 'debian'
     libyaml-dev libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev
     automake libtool bison
   )
-when 'rhel'
-  []
-when 'fedora'
-  []
+when 'rhel', 'fedora'
+  %w(
+    readline readline-devel zlib zlib-devl libyaml-devel libffi-devel openssl-devel
+    bzip2 autoconf libtool bison iconv-devel
+  )
 else
+  []
 end
 default[:ruby_installer][:ree_url] = 'http://rubyenterpriseedition.googlecode.com/files/ruby-enterprise_1.8.7-2012.02_amd64_ubuntu10.04.deb'
 default[:ruby_installer][:ree_source_url] = 'http://rubyenterpriseedition.googlecode.com/files/ruby-enterprise-1.8.7-2012.02.tar.gz'
