@@ -36,3 +36,8 @@ Repository
 ==========
 
 https://github.com/heavywater/chef-ruby_installer
+
+Contributors
+============
+
+* Graham McIntire - https://github.com/gmcintire
