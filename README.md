@@ -27,11 +27,6 @@ Configurable attributes
 * `default[:ruby_installer][:ree_url] = 'http://rubyenterpriseedition.googlecode.com/files/ruby-enterprise_1.8.7-2012.02_amd64_ubuntu10.04.deb' # URI for REE deb package`
 * `default[:ruby_installer][:ree_source_url] = 'http://rubyenterpriseedition.googlecode.com/files/ruby-enterprise-1.8.7-2012.02.tar.gz' # URI for REE source`
 
-Notes
-=====
-
-Source installation is currently not implemented.
-
 Repository
 ==========
 
