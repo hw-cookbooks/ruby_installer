@@ -10,3 +10,4 @@ version          "0.1.0"
 end
 
 depends 'build-essential'
+depends 'apt'

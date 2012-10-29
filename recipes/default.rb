@@ -7,6 +7,8 @@ end
 case node[:ruby_installer][:method]
 when 'package'
   include_recipe 'ruby_installer::package'
+when 'package_ng'
+  include_recipe 'ruby_installer::package_ng'
 when 'ree'
   include_recipe 'ruby_installer::ree'
 when 'source'
