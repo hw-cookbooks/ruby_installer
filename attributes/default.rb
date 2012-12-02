@@ -2,10 +2,11 @@ default[:ruby_installer][:method] = 'package'
 default[:ruby_installer][:package_name] = true
 default[:ruby_installer][:rubygem_package] = true
 default[:ruby_installer][:rubydev_package] = true
-default[:ruby_installer][:source_version] = '1.9.3-p194'
+default[:ruby_installer][:source_version] = '1.9.3-p327'
 default[:ruby_installer][:source_install_dir] = '/usr/local'
 default[:ruby_installer][:source_rubygems_version] = '1.8.24'
 default[:ruby_installer][:source_rubygems_force] = false
+default[:ruby_installer][:source_optimization_level] = 3
 default[:ruby_installer][:source_package_dependencies] = case node.platform_family
 when 'debian'
   %w(
