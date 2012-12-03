@@ -10,14 +10,20 @@ bash "install_ruby" do
     tar -zxf ruby-#{node[:ruby_installer][:source_version]}.tar.gz
     cd ruby-#{node[:ruby_installer][:source_version]}/
     autoconf
-    curl https://raw.github.com/gist/4136373/falcon-gc.diff | patch -p1
-    export CFLAGS="-march=native -pipe -fomit-frame-pointer -O#{node[:ruby_installer][:source_optimization_level]}"
+    #{
+      if(node[:ruby_installer][:source_falcon_patch]) 
+        "curl https://raw.github.com/gist/4136373/falcon-gc.diff | patch -p1"
+      end
+    }
     ./configure --prefix=#{node[:ruby_installer][:source_install_dir]} --disable-install-doc --enable-shared
     make -j#{node[:cpu][:total]+1}
     make install
   EOH
   action :nothing
   notifies :reload, resources(:ohai => 'ruby'), :immediately
+  if(node[:ruby_installer][:source_optimize])
+    environment :cflags => "-march=native -pipe -fomit-frame-pointer -O#{node[:ruby_installer][:source_optimization_level]}"
+  end
 end
 
 remote_file "/usr/src/ruby-#{node[:ruby_installer][:source_version]}.tar.gz" do
