@@ -4,6 +4,12 @@ ohai "ruby" do
   action :nothing
 end
 
+node[:ruby_installer][:package_removals].each do |r_pkg|
+  package r_pkg do
+    action :remove
+  end
+end
+
 case node[:ruby_installer][:method]
 when 'package'
   include_recipe 'ruby_installer::package'

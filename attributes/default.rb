@@ -1,4 +1,5 @@
 default[:ruby_installer][:method] = 'package'
+default[:ruby_installer][:package_removals] = []
 default[:ruby_installer][:package_name] = true
 default[:ruby_installer][:rubygem_package] = false
 default[:ruby_installer][:rubydev_package] = true
