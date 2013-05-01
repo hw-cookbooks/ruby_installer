@@ -1,3 +1,7 @@
+v0.1.2
+======
+* Add attribute based package removal
+
 v0.1.0
 ======
 
