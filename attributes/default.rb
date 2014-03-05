@@ -19,9 +19,9 @@ when 'debian'
   )
 when 'rhel', 'fedora'
   %w(
-    readline readline-devel zlib zlib-devl libyaml-devel libffi-devel openssl-devel
-    bzip2 autoconf libtool bison iconv-devel
-  )
+    readline readline-devel zlib zlib-devel libyaml-devel libffi-devel openssl-devel
+    bzip2 autoconf libtool bison
+  ) + (node.platform_version < '5.4' ? [iconv-devel] : [])
 else
   []
 end
