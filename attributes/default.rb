@@ -19,7 +19,7 @@ when 'debian'
   )
 when 'rhel', 'fedora'
   %w(
-    readline readline-devel zlib zlib-devl libyaml-devel libffi-devel openssl-devel
+    readline readline-devel zlib zlib-devel libyaml-devel libffi-devel openssl-devel
     bzip2 autoconf libtool bison iconv-devel
   )
 else
