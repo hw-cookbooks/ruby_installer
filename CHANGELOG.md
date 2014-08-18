@@ -1,3 +1,9 @@
+v0.1.3
+======
+* Corrections for iconv-dev and rhel/centos
+* Cookbook admin support for emeril
+* Basic Kitchen.ci support
+
 v0.1.2
 ======
 * Add attribute based package removal
