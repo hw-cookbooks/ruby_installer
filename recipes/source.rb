@@ -1,14 +1,20 @@
 include_recipe 'build-essential'
+ruby_ver = node['ruby_installer']['source_version']
 
-Array(node['ruby_installer']['source_package_dependencies']).each do |pkg|
+node['ruby_installer']['source_package_dependencies'].each do |pkg|
   package pkg
+end
+
+remote_file "/usr/src/ruby-#{ruby_ver}.tar.gz" do
+  source "http://ftp.ruby-lang.org/pub/ruby/#{ruby_ver[0..2]}/ruby-#{ruby_ver}.tar.gz"
+  action :create_if_missing
 end
 
 bash 'install_ruby' do
   cwd '/usr/src'
   code <<-EOH
-    tar -zxf ruby-#{node['ruby_installer']['source_version']}.tar.gz
-    cd ruby-#{node['ruby_installer']['source_version']}/
+    tar -zxf ruby-#{ruby_ver}.tar.gz
+    cd ruby-#{ruby_ver}/
     autoconf
     #{if node['ruby_installer']['source_falcon_patch']
         'curl https://raw.github.com/gist/4136373/falcon-gc.diff | patch -p1'
@@ -17,29 +23,17 @@ bash 'install_ruby' do
     make -j#{node['cpu']['total'] + 1}
     make install
   EOH
-  action :nothing
+  not_if { Mixlib::ShellOut.new('ruby --version').run_command.stdout.include?(ruby_ver) }
   notifies :reload, 'ohai[ruby]', :immediately
   if node['ruby_installer']['source_optimize']
     environment cflags: "-march=native -pipe -fomit-frame-pointer -O#{node['ruby_installer']['source_optimization_level']}"
   end
 end
 
-remote_file "/usr/src/ruby-#{node['ruby_installer']['source_version']}.tar.gz" do
-  not_if do
-    begin
-      v = %(#{File.join(node['ruby_installer']['source_install_dir'], 'bin', 'ruby')} --version).strip
-      v.split(' ')[1] == node['ruby_installer']['source_version'].sub('-', '')
-    rescue Errno::ENOENT
-      false
-    end
-  end
-  source "http://ftp.ruby-lang.org/pub/ruby/#{node['ruby_installer']['source_version'][0..2]}/ruby-#{node['ruby_installer']['source_version']}.tar.gz"
-  action :create_if_missing
-  notifies :run, 'bash[install_ruby]', :immediately
-end
-
-rin_ver = Gem::Version.new(node['ruby_installer']['source_version'].match(/(\d+\.?){2,3}/).to_s)
+rin_ver = Gem::Version.new(ruby_ver.match(/(\d+\.?){2,3}/).to_s)
 
 if rin_ver < Gem::Version.new('1.9.0') || node['ruby_installer']['source_rubygems_force']
   include_recipe 'ruby_installer::source_rubygems'
 end
+
+include_recipe 'ruby_installer::_ruby_path'

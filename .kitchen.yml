@@ -8,10 +8,26 @@ provisioner:
 
 platforms:
   - name: ubuntu-14.04
-  - name: centos-6
+  - name: centos-6.7
 
 suites:
-  - name: default
+  - name: package
     run_list:
       - recipe[ruby_installer::default]
     attributes:
+      ruby_installer:
+        method: package
+
+  - name: source
+    run_list:
+      - recipe[ruby_installer::default]
+    attributes:
+      ruby_installer:
+        method: source
+
+  - name: ree
+    run_list:
+      - recipe[ruby_installer::default]
+    attributes:
+      ruby_installer:
+        method: ree

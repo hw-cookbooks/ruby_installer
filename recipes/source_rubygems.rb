@@ -1,23 +1,17 @@
+rubygem_ver = node['ruby_installer']['source_rubygems_version']
+bin_dir = "#{node['ruby_installer']['source_install_dir']}/bin"
+
+remote_file "/usr/src/rubygems-#{rubygem_ver}.tgz" do
+  source "http://production.cf.rubygems.org/rubygems/rubygems-#{rubygem_ver}.tgz"
+  action :create_if_missing
+end
+
 bash 'install_rubygems' do
   cwd '/usr/src'
   code <<-EOH
-    tar -zxf rubygems-#{node['ruby_installer']['source_rubygems_version']}.tgz
-    cd rubygems-#{node['ruby_installer']['source_rubygems_version']}
-    #{File.join(node['ruby_installer']['source_install_dir'], 'bin', 'ruby')} setup.rb
+    tar -zxf rubygems-#{rubygem_ver}.tgz
+    cd rubygems-#{rubygem_ver}
+    #{bin_dir}/ruby setup.rb
   EOH
-  action :nothing
-end
-
-remote_file "/usr/src/rubygems-#{node['ruby_installer']['source_rubygems_version']}.tgz" do
-  source "http://production.cf.rubygems.org/rubygems/rubygems-#{node['ruby_installer']['source_rubygems_version']}.tgz"
-  not_if do
-    begin
-      v = `#{File.join(node['ruby_installer']['source_install_dir'], 'bin', 'gem')} --version`.strip
-      v == node['ruby_installer']['source_rubygems_version']
-    rescue Errno::ENOENT
-      false
-    end
-  end
-  action :create_if_missing
-  notifies :run, 'bash[install_rubygems]', :immediately
+  not_if { Mixlib::ShellOut.new("#{bin_dir}/gem --version").run_command.stdout.include?(rubygem_ver) }
 end
