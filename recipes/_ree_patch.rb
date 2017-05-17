@@ -1,6 +1,6 @@
 #
-# Cookbook Name:: sd_ruby_installer
-# Recipe:: ree_patch
+# Cookbook Name:: ruby_installer
+# Recipe:: _ree_patch
 #
 # Copyright (C) 2017 SpinDance, Inc.
 #
