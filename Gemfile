@@ -1,9 +1,9 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
 source 'https://rubygems.org'
 
-gem 'rake'
-gem 'emeril', :group => :release
-gem 'librarian-chef'
-gem 'test-kitchen'
+gem 'berkshelf'
+gem 'solve'
+gem 'serverspec'
+gem 'chefspec'
+gem 'chef', '= 12.18.31'
+gem 'cookstyle'
 gem 'kitchen-vagrant'

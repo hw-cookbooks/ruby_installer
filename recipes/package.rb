@@ -1,51 +1,27 @@
-if(node[:ruby_installer][:package_name])
-  if(node[:ruby_installer][:package_name] == true)
-    case node.platform_family
-    when 'debian'
-      package_name = 'ruby-full'
-    when 'fedora', 'rhel'
-      package_name = 'ruby'
-    else
-      raise 'Unknown package name for this platform'
-    end
-  else
-    package_name = node[:ruby_installer][:package_name]
-  end
-end
+#
+# Cookbook Name:: ruby_installer
+# Recipe:: package
+#
+# Copyright 2012-2014, Chris Roberts <chrisroberts.code@gmail.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
 
-if(node[:ruby_installer][:rubydev_package])
-  if(node[:ruby_installer][:rubydev_package] == true)
-    case node.platform_family
-    when 'debian'
-      dev_name = 'ruby-dev'
-    when 'fedora', 'rhel'
-      dev_name = 'ruby-devel'
-    else
-      raise 'Unknown ruby dev package name for this platform'
-    end
-  else
-    dev_name = node[:ruby_installer][:rubydev_package]
-  end
-end
+package_name = node['ruby_installer']['package_name']
+dev_name = node['ruby_installer']['rubydev_package']
+gem_name = node['ruby_installer']['rubygem_package']
 
-if(node[:ruby_installer][:rubygem_package])
-  if(node[:ruby_installer][:rubygem_package] == true)
-    case node.platform_family
-    when 'debian'
-      gem_name = 'rubygems'
-    when 'fedora', 'rhel'
-      gem_name = nil
-    else
-      raise 'Unknown rubygems package name for this platform'
-    end
-  else
-    gem_name = node[:ruby_installer][:rubygem_package]
-  end
-end
-
-[package_name, dev_name, gem_name].compact.each do |pkg|
-  package pkg do
-    action :upgrade
-    notifies :reload, resources(:ohai => 'ruby'), :immediately
-  end
+package [package_name, dev_name, gem_name].compact do
+  action :upgrade
+  notifies :reload, 'ohai[ruby]', :immediately
 end

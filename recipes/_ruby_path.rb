@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: ruby_installer
-# Attributes:: default
+# Recipe:: _ruby_path
 #
 # Copyright 2012-2014, Chris Roberts <chrisroberts.code@gmail.com>
 #
@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
-default['ruby_installer']['method'] = 'package'
-default['ruby_installer']['package_removals'] = []
-default['ruby_installer']['set_path?'] = true
+file '/etc/profile.d/ruby_path.sh' do
+  content "export PATH=#{node['ruby_installer']['source_install_dir']}/bin:$PATH"
+  mode '0644'
+  only_if { node['ruby_installer']['set_path?'] }
+end

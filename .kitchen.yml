@@ -1,16 +1,33 @@
 ---
 driver:
   name: vagrant
+  require_chef_omnibus: 12.18.31
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
 
 platforms:
-  - name: ubuntu-12.04
-  - name: centos-6.4
+  - name: ubuntu-14.04
+  - name: centos-6.7
 
 suites:
-  - name: default
+  - name: package
     run_list:
       - recipe[ruby_installer::default]
     attributes:
+      ruby_installer:
+        method: package
+
+  - name: source
+    run_list:
+      - recipe[ruby_installer::default]
+    attributes:
+      ruby_installer:
+        method: source
+
+  - name: ree
+    run_list:
+      - recipe[ruby_installer::default]
+    attributes:
+      ruby_installer:
+        method: ree

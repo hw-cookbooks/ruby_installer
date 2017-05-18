@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: ruby_installer
-# Attributes:: default
+# Attributes:: package
 #
 # Copyright 2012-2014, Chris Roberts <chrisroberts.code@gmail.com>
 #
@@ -17,6 +17,15 @@
 # limitations under the License.
 #
 
-default['ruby_installer']['method'] = 'package'
-default['ruby_installer']['package_removals'] = []
-default['ruby_installer']['set_path?'] = true
+default['ruby_installer']['package_name'] = value_for_platform_family(
+  'debian' => 'ruby-full',
+  'default' => 'ruby'
+)
+default['ruby_installer']['rubydev_package'] = value_for_platform_family(
+  'debian' => 'ruby-dev',
+  'default' => 'ruby-devel'
+)
+default['ruby_installer']['rubygem_package'] = value_for_platform_family(
+  'debian' => 'rubygems-integration',
+  'default' => nil # 'rubygems'
+)
