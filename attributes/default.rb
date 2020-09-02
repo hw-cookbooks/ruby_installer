@@ -10,20 +10,20 @@ default[:ruby_installer][:source_rubygems_force] = false
 default[:ruby_installer][:source_optimize] = false
 default[:ruby_installer][:source_optimization_level] = 1
 default[:ruby_installer][:source_falcon_patch] = false
-default[:ruby_installer][:source_package_dependencies] = case node.platform_family
-when 'debian'
-  %w(
-    openssl libreadline6 libreadline6-dev curl zlib1g zlib1g-dev libssl-dev
-    libyaml-dev libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev
-    automake libtool bison
-  )
-when 'rhel', 'fedora'
-  %w(
-    readline readline-devel zlib zlib-devel libyaml-devel libffi-devel openssl-devel
-    bzip2 autoconf libtool bison
-  ) + (node.platform_version < '5.4' ? ['iconv-devel'] : [])
-else
-  []
-end
+default[:ruby_installer][:source_package_dependencies] = case node['platform_family']
+                                                         when 'debian'
+                                                           %w(
+                                                             openssl libreadline6 libreadline6-dev curl zlib1g zlib1g-dev libssl-dev
+                                                             libyaml-dev libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev
+                                                             automake libtool bison
+                                                           )
+                                                         when 'rhel', 'fedora'
+                                                           %w(
+                                                             readline readline-devel zlib zlib-devel libyaml-devel libffi-devel openssl-devel
+                                                             bzip2 autoconf libtool bison
+                                                           ) + (node['platform_version'] < '5.4' ? ['iconv-devel'] : [])
+                                                         else
+                                                           []
+                                                         end
 default[:ruby_installer][:ree_url] = 'http://rubyenterpriseedition.googlecode.com/files/ruby-enterprise_1.8.7-2012.02_amd64_ubuntu10.04.deb'
 default[:ruby_installer][:ree_source_url] = 'http://rubyenterpriseedition.googlecode.com/files/ruby-enterprise-1.8.7-2012.02.tar.gz'
