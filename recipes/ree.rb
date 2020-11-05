@@ -20,9 +20,7 @@ when 'debian'
   end
 when 'fedora', 'rhel'
   build_essential 'install compilation tools'
-  %w(readline-devel openssl-devel patch).each do |pkg|
-    package pkg
-  end
+  package %w(readline-devel openssl-devel patch)
 
   remote_file "/usr/src/#{File.basename(node['ruby_installer']['ree_source_url'])}" do
     source node['ruby_installer']['ree_source_url']

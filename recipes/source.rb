@@ -11,7 +11,7 @@ bash 'install_ruby' do
     cd ruby-#{node['ruby_installer']['source_version']}/
     autoconf
     #{
-      if node['ruby_installer']['source_falcon_patch'] 
+      if node['ruby_installer']['source_falcon_patch'] # {' '}
         'curl https://raw.github.com/gist/4136373/falcon-gc.diff | patch -p1'
       end
     }
