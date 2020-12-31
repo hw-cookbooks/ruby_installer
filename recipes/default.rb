@@ -21,4 +21,3 @@ else
   Chef::Log.error "[ruby_installer]: Unknown installation method requested (#{node['ruby_installer']['method']})"
   raise 'Unknown ruby installation method requested'
 end
-
