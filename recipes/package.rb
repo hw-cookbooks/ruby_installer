@@ -34,7 +34,7 @@ if node['ruby_installer']['rubygem_package']
     when 'debian'
       gem_name = 'rubygems'
     when 'fedora', 'rhel'
-      gem_name = nil
+      gem_name = 'rubygems'
     else
       raise 'Unknown rubygems package name for this platform'
     end
